@@ -1,30 +1,33 @@
 document.getElementById('weather-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const city = document.getElementById('city').value;
-    const resultsDiv = document.getElementById('weather-results');
+    const ciudad = document.getElementById('ciudad').value;
+    const resultadoDiv = document.getElementById('weather-results');
 
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=0df25407ba2c2dba5e381cf6299078e9&units=metric&lang=es`);
+        const respuesta = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=0df25407ba2c2dba5e381cf6299078e9&units=metric&lang=es`);
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        if (!respuesta.ok) {
+            throw new Error(`ESTAS INGRESANDO UNA CIUDAD INCORRECTA`);
         }
 
-        const data = await response.json();
+        const data = await respuesta.json();
 
         if (data.cod !== 200) {
-            resultsDiv.innerHTML = `<p>${data.message}</p>`;
+            resultadoDiv.innerHTML = `<p>${data.message}</p>`;
         } else {
-            resultsDiv.innerHTML = `
+            resultadoDiv.innerHTML = `
                 <h2>Clima en ${data.name}, ${data.sys.country}</h2>
                 <p><strong>Temperatura:</strong> ${data.main.temp} °C</p>
                 <p><strong>Descripción:</strong> ${data.weather[0].description}</p>
                 <p><strong>Humedad:</strong> ${data.main.humidity} %</p>
                 <p><strong>Velocidad del Viento:</strong> ${data.wind.speed} m/s</p>
+                <p><strong>Temperatura Minina:</strong> ${data.main.temp_min} °C</p>
+                <p><strong>longitud</strong> ${data.coord.lon}</p>
+                <p><strong>latitud</strong> ${data.coord.lat}</p>
             `;
         }
     } catch (error) {
-        resultsDiv.innerHTML = `<p>${error.message}</p>`;
+        resultadoDiv.innerHTML = `<p>${error.message}</p>`;
     }
 });
