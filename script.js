@@ -10,7 +10,6 @@ document.getElementById('weather-form').addEventListener('submit', async (e) => 
         if (!respuesta.ok) {
             throw new Error(`ESTAS INGRESANDO UNA CIUDAD INCORRECTA`);
         }
-
         const data = await respuesta.json();
 
         if (data.cod !== 200) {
